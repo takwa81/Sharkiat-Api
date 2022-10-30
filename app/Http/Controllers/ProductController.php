@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ProductDetailsResource;
 use App\Models\Product ;
+use App\Models\Category ;
 use App\Models\ProductImages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+       
         $usertype = Auth::user()->role;
         if($usertype == "1"){
         $request->validate(
@@ -47,7 +49,7 @@ class ProductController extends Controller
                 "price" => "required",
             ]
         );
-
+       
         $product = Product::create([
             "name" => $request->name,
             "price" => $request->price,
@@ -62,7 +64,6 @@ class ProductController extends Controller
 
         $images = $request->file('images');
         $imageName = "" ;
-        dd($images);
         foreach ($images as $image) {
             $new_name = rand().'.'.$image->getClientOriginalExtension();
             $image->move(public_path('/images/products/'),$new_name);
@@ -76,7 +77,6 @@ class ProductController extends Controller
     }else{
         return response()->json(['message'=> 'you are not admin']);
     }
-        
     }
 
    

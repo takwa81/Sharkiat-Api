@@ -17,8 +17,8 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('price');
-            $table->decimal('discount',5,2)->nullable();
-            $table->decimal('sale_price',5,2)->nullable();
+            $table->integer('discount')->nullable();
+            $table->decimal('sale_price')->nullable();
             $table->integer('quantity')->nullable();
             $table->string('description')->nullable();
             $table->boolean('is_appear_home')->nullable()->default(false);
